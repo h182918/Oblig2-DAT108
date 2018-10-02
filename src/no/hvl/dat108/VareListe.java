@@ -13,6 +13,14 @@ public class VareListe {
 	    public List<String> hent() {
 	        return liste;
 	    }
+	    
+	    public int str() {
+	        return liste.size();
+	    }
+	    
+	    public void slett(int index) {
+	        liste.remove(index);
+	    }
 
 	    
 	 //Laget om fra Vareobjekt til string fordi enklere å slette og opprette.

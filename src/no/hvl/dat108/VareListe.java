@@ -14,9 +14,13 @@ public class VareListe {
 	        return liste;
 	    }
 
+	    public void fjern(String item) {
+	    	liste.remove(item);
+	    }
 	    
-	 //Laget om fra Vareobjekt til string fordi enklere å slette og opprette.
-	    //problemer med å slette
+	    public int str() {
+	    	return liste.size();
+	    }
 	
 }
 

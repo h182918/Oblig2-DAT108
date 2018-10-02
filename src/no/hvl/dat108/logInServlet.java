@@ -74,8 +74,9 @@ public class logInServlet extends HttpServlet {
 				s.setMaxInactiveInterval(30);
 				s.setAttribute("password", request.getParameter("PW"));
 				s.setAttribute("Listen", new VareListe());
+			
+				response.sendRedirect("handlelisteServlet");
 			}
-		response.sendRedirect("handlelisteServlet");
 		}
 	}
 	

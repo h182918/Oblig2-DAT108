@@ -56,7 +56,7 @@ public class logInServlet extends HttpServlet {
 		String rPW = request.getParameter("PW");
 		if(!rPW.equals(PW)) {
 			pass = false;
-			doGet(request, response);
+			response.sendRedirect("login");
 		}else {
 			pass = true;
 			HttpSession s = request.getSession(false);

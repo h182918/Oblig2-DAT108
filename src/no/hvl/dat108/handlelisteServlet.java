@@ -18,18 +18,14 @@ public class handlelisteServlet extends HttpServlet {
 	VareListe vlist = new VareListe();
    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession s = request.getSession(false);
-		if(s != null) {
-			s.invalidate();
-		}else {
-			s = request.getSession(true);
-			s.setMaxInactiveInterval(30);
-			s.setAttribute("password", request.getParameter("PW"));
-			
+		//Sjekke om det er en aktiv session eller sender tilbake til hovedsiden
+		HttpSession s = request.getSession();
+		if(s !=  null && s.getAttribute("password") != null) {
+			VareListe liste = (VareListe)request.getSession().getAttribute("Listen");
+		
 			
 			response.setContentType("text/html; charset=ISO-8859-1");
 			PrintWriter out = response.getWriter();
-			
 			out.println("<!DOCTYPE html>");
 			out.println("<html>");
 			out.println("<body>");
@@ -44,20 +40,28 @@ public class handlelisteServlet extends HttpServlet {
 			out.println("</form>");
 			out.println("</body>");
 			out.println("</html>");
+			
+			
+			
 			s.setAttribute("vare", request.getParameter("vare"));
 			vlist = (VareListe) s.getAttribute("vare");
 		
-		
-		
-		
+		}else {
+			response.sendRedirect("login");
 		}
-		
-		
-		
-		
+	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//Sjekker om bruker har seksjon
+		
+		
+		//Sjekker om det ska legges til slettes vare
+		
+		
+		//else sletter dersom den ikke skal legges til. 
+		
+		
 		
 	}
 

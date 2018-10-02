@@ -4,14 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VareListe {
-	 private List<Vare> liste = new ArrayList<>();
+	 private List<String> liste = new ArrayList<>();
 	    
-	    public void leggTil(Vare item) {
+	    public void leggTil(String item) {
 	        liste.add(item);
 	    }
 	    
-	    public List<Vare> hent() {
+	    public List<String> hent() {
 	        return liste;
 	    }
 
+	    
+	 //Laget om fra Vareobjekt til string fordi enklere å slette og opprette.
+	    //problemer med å slette
+	
 }
+

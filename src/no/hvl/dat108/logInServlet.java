@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 public class logInServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	String PW = null;
+	Boolean pass = null;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
@@ -32,9 +33,15 @@ public class logInServlet extends HttpServlet {
 		out.println("<form action=\"login\" method=\"post\">");
 		out.println("<fieldset>");
 		out.println("<legend>Login</legend>");
-		out.println("<h3>");
-		out.println("Oppgi passord");
-		out.println("</h3>");
+		if(pass) {
+			out.println("<h3>");
+			out.println("Oppgi passord");
+			out.println("</h3>");
+		}else if(!pass) {
+			out.println("<h3>");
+			out.println("Passordet du oppga var feil! Prøv igjen:");
+			out.println("</h3>");
+		}
 		out.println("<p>");
         out.println("<input type=\"password\" name=\"PW\"/>");
         out.println("</p>");
@@ -46,26 +53,12 @@ public class logInServlet extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
 		String rPW = request.getParameter("PW");
 		if(!rPW.equals(PW)) {
-			out.println("<html>");
-			out.println("<body>");
-			out.println("<form action=\"login\" method=\"post\">");
-			out.println("<fieldset>");
-			out.println("<legend>Login</legend>");
-			out.println("<h3>");
-			out.println("Passordet du oppga var feil! Prøv igjen:");
-			out.println("</h3>");
-			out.println("<p>");
-	        out.println("<input type=\"password\" name=\"PW\"/>");
-	        out.println("</p>");
-			out.println("<p><input type=\"submit\" value=\"Send data\" /></p>");
-			out.println("</fieldset>");
-			out.println("<form>");
-			out.println("</body>");
-			out.println("</html>");
+			pass = false;
+			doGet(request, response);
 		}else {
+			pass = true;
 			HttpSession s = request.getSession(false);
 			if(s != null) {
 				s.invalidate();
@@ -80,6 +73,7 @@ public class logInServlet extends HttpServlet {
 	}
 	
 	public void init(ServletConfig config) throws ServletException {
+		pass = true;
 		PW = config.getInitParameter("password");
 	}
 }

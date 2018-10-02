@@ -28,6 +28,8 @@ public class logInServlet extends HttpServlet {
 			s.setMaxInactiveInterval(30);
 			s.setAttribute("password", request.getParameter("PW"));
 		}
+		response.setContentType("text/html; charset=ISO-8859-1");
+		out.println("<!DOCTYPE html>");
 		out.println("<html>");
 		out.println("<body>");
 		out.println("<form action=\"login\" method=\"post\">");
@@ -67,8 +69,9 @@ public class logInServlet extends HttpServlet {
 				s.setMaxInactiveInterval(30);
 				s.setAttribute("password", request.getParameter("PW"));
 				s.setAttribute("Listen", new VareListe());
+				response.sendRedirect("handlelisteServlet");
 			}
-		response.sendRedirect("handlelisteServlet");
+		
 		}
 	}
 	

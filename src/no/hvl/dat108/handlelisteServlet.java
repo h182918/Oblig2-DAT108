@@ -29,16 +29,16 @@ public class handlelisteServlet extends HttpServlet {
 			out.println("<h3>");
 			out.println("Min handleliste");
 			out.println("</h3>");
-			out.println("<form action = \"handlelisteServlet\" method = \"post\">");
+			out.println("<form action = \"handlelisteServlet\" name=\"leggtil\" method = \"post\">");
 			out.println("<p>");
 			out.println("<button> Legg til</button>");
 			out.println("<input type=\"text\" name=\"vare\"/>");
 			out.println("</p>");
 			out.println("</form>");
 			if (liste.str() > 0) {
-				out.println("<form action = \"handlelisteServlet\" method = \"post\">");
+				out.println("<form action = \"handlelisteServlet\" name=\"slett\"method = \"post\">");
 				for (int i = 0; i < liste.str(); i++) {
-					out.println("<p><input type=\"submit\" id=" + i + " value=\"Slett\" /></p>" + liste.hent().get(i));
+					out.println("<p><input type=\"submit\" name=" + i + " value=\"Slett\" />	" + liste.hent().get(i) + "</p>" );
 				}
 				out.println("</form>");
 			}
@@ -50,13 +50,21 @@ public class handlelisteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		String input = StringEscapeUtils.escapeHtml(request.getParameter("vare"));
 		HttpSession s = request.getSession(false);
-
+		PrintWriter out = response.getWriter();
 		if (s == null) {
 			response.sendRedirect("login?ikkeloggetinn");
 		} else {
+//			String test = request.get;
 			VareListe liste = (VareListe) s.getAttribute("Listen");
-			liste.leggTil(input);
-			response.sendRedirect("handlelisteServlet");
+			if(request.getParameter("leggtil") != null) {
+				out.println("hei");
+				liste.leggTil(input);
+				response.sendRedirect("handlelisteServlet");
+			}else {
+				response.sendRedirect("handlelisteServlet?feil1");
+			}
+
+
 		}
 	}
 }

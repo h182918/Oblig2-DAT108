@@ -17,5 +17,9 @@
   		<param-name>password</param-name>
   		<param-value>1234</param-value>
     </init-param>
+        <init-param>
+  		<param-name>session-logout</param-name>
+  		<param-value>30</param-value>
+    </init-param>
   </servlet>
 </web-app>

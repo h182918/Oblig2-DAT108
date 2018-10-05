@@ -55,7 +55,7 @@ public class logInServlet extends HttpServlet {
         out.println("</p>");
 		out.println("<p><input type=\"submit\" value=\"Send data\" /></p>");
 		out.println("</fieldset>");
-		out.println("<form>");
+		out.println("</form>");
 		out.println("</body>");
 		out.println("</html>");
 	}
@@ -71,15 +71,14 @@ public class logInServlet extends HttpServlet {
 			HttpSession s = request.getSession(false);
 			if(s != null) {
 				s.invalidate();
-			}else {
-				s = request.getSession(true);
-				s.setMaxInactiveInterval(Slogout);
-				s.setAttribute("password", request.getParameter("PW"));
-				s.setAttribute("Listen", liste);
-				Thread t = new Thread((Runnable) s.getAttribute("Listen"));
-				t.start();
-				response.sendRedirect("handlelisteServlet");
 			}
+			s = request.getSession(true);
+			s.setMaxInactiveInterval(Slogout);
+			s.setAttribute("password", request.getParameter("PW"));
+			s.setAttribute("Listen", liste);
+
+			response.sendRedirect("handlelisteServlet");
+			
 		}
 	}
 	

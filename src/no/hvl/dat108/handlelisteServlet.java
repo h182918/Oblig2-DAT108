@@ -70,7 +70,6 @@ public class handlelisteServlet extends HttpServlet {
 					liste.slett(vare);
 					response.sendRedirect("handlelisteServlet");
 				}
-				response.sendRedirect("handlelisteServlet");
 			}else {
 				//Hvis noe kommer seg gjennom som ikke er slett eller leggtil vil siden bare vises på nytt
 				response.sendRedirect("handlelisteServlet");

@@ -13,10 +13,16 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "login", urlPatterns = "/login")
 public class logInServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	String PW = null;
-	Boolean pass = null;
 	
+	// oppretter faste variabler som holder kontroll på passord/utskrifter/logouttimer og listen som brukes
+	private static final long serialVersionUID = 1L;
+	private String PW = null;
+	private Boolean pass = null;
+	private int Slogout = 0;
+	static VareListe liste =  new VareListe();
+	
+	
+	// viser loginsiden redirecter til post hvor passord blir validert
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		HttpSession s = request.getSession(false);
@@ -32,7 +38,7 @@ public class logInServlet extends HttpServlet {
 		out.println("<!DOCTYPE html>");
 		out.println("<html>");
 		out.println("<body>");
-		out.println("<form action=\"login\" method=\"post\">");
+		out.println("<form action=\"login\" accept-charset=\"utf-8\" method=\"post\">");
 		out.println("<fieldset>");
 		out.println("<legend>Login</legend>");
 		if(pass) {
@@ -54,6 +60,7 @@ public class logInServlet extends HttpServlet {
 		out.println("</html>");
 	}
 	
+	// validerer passord or redirecter til handlelisten hvis riktig, redirecter til loginsiden(med feilmelding) hvis feil
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String rPW = request.getParameter("PW");
 		if(!rPW.equals(PW)) {
@@ -66,17 +73,20 @@ public class logInServlet extends HttpServlet {
 				s.invalidate();
 			}else {
 				s = request.getSession(true);
-				s.setMaxInactiveInterval(30);
+				s.setMaxInactiveInterval(Slogout);
 				s.setAttribute("password", request.getParameter("PW"));
-				s.setAttribute("Listen", new VareListe());
+				s.setAttribute("Listen", liste);
+				Thread t = new Thread((Runnable) s.getAttribute("Listen"));
+				t.start();
 				response.sendRedirect("handlelisteServlet");
 			}
-		
 		}
 	}
 	
+	// henter og initialiserer startverdier fra web.xml 
 	public void init(ServletConfig config) throws ServletException {
 		pass = true;
 		PW = config.getInitParameter("password");
+		Slogout = Integer.parseInt(config.getInitParameter("session-logout"));
 	}
 }

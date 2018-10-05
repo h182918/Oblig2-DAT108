@@ -3,7 +3,7 @@ package no.hvl.dat108;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VareListe {
+public class VareListe extends Thread{
 	 private List<String> liste = new ArrayList<>();
 	    
 	    public void leggTil(String item) {
@@ -18,13 +18,8 @@ public class VareListe {
 	        return liste.size();
 	    }
 	    
-	    public void slett(int index) {
-	        liste.remove(index);
+	    public void slett(String vare) {
+	    	liste.remove(vare);
 	    }
-
-	    
-	 //Laget om fra Vareobjekt til string fordi enklere å slette og opprette.
-	    //problemer med å slette
-	
 }
 
